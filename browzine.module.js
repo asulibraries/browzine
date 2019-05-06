@@ -16,15 +16,15 @@
 
 
 angular.module('browzineMod', [])
-  .controller('browzineController', [function () {
+  .controller('browzineController', ['$scope', function ($scope) {
     var self = this;
     console.log(self);
 
     self.$onInit = function () {
       console.log("in init")
       console.log(self.prmSearchResultAvailabilityLine);
-      // $scope.ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
-      // window.browzine.primo.searchResult($scope);
+      $scope.ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
+      window.browzine.primo.searchResult($scope);
     }
 
   }])
