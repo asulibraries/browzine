@@ -1,4 +1,4 @@
-angular.module('browzine', [])
+angular.module('browzineMod', [])
   .controller('browzineController', [function ($scope) {
     console.log("we are in the browzine module")
     var self = this;
@@ -6,7 +6,7 @@ angular.module('browzine', [])
     $scope.ctrl = self.prmSearchResultAvailabilityLine;
     window.browzine.primo.searchResult($scope);
   }])
-  .component('browzine', {
+  .component('browzineMod', {
     require: {
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
