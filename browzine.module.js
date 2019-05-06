@@ -18,11 +18,12 @@
 angular.module('browzineMod', [])
   .controller('browzineController', [function () {
     var self = this;
-    console.log(self.prmSearchResultAvailabilityLine);
+    console.log(self);
 
     self.$onInit = function () {
       console.log("in init")
-      $scope.ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
+      console.log(self.prmSearchResultAvailabilityLine);
+      // $scope.ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // window.browzine.primo.searchResult($scope);
     }
 
