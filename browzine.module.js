@@ -1,28 +1,8 @@
-// angular.module('browzineMod', [])
-//   .controller('browzineController', ['$scope', function ($scope) {
-//     console.log("we are in the browzine module")
-//     var self = this;
-//     console.log(this);
-//     console.log(self.prmSearchResultAvailabilityLine)
-//     $scope.ctrl = {'parentCtrl': self.prmSearchResultAvailabilityLine};
-//     window.browzine.primo.searchResult($scope);
-//   }])
-//   .component('browzineMod', {
-//     require: {
-//       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
-//     },
-//     controller: 'browzineController'
-//   });
-
-
 angular.module('browzineMod', [])
   .controller('browzineController', ['$scope', function ($scope) {
     var self = this;
-    // console.log(self);
 
     self.$onInit = function () {
-      // console.log("in init")
-      // console.log(self.prmSearchResultAvailabilityLine);
       $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       window.browzine.primo.searchResult($scope);
     }
@@ -31,10 +11,6 @@ angular.module('browzineMod', [])
   .component('browzineMod', {
     require: {
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
-    },
-    bindings: {
-      hideOnline: '<',
-      msg: '@?'
     },
     controller: 'browzineController',
   });
