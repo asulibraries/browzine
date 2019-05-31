@@ -393,7 +393,10 @@ browzine.primo = (function() {
         var directToPDFUrl = getDirectToPDFUrl(scope, data);
 
         var element = getElement(scope);
-        console.log(element);
+        console.log(element.childNodes);
+        console.log(element[0].childNodes);
+        console.log(element.getElementsByTagName("browzine-mod"));
+        console.log(element.getElementsByTagName("browzine-mod")[0]);
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
           var template = directToPDFTemplate(directToPDFUrl);
