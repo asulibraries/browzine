@@ -392,11 +392,8 @@ browzine.primo = (function() {
         var defaultCoverImage = isDefaultCoverImage(coverImageUrl);
         var directToPDFUrl = getDirectToPDFUrl(scope, data);
 
-        var element = getElement(scope);
-        // console.log(element.childNodes);
-        console.log(element[0].childNodes);
-        console.log(element[0].getElementsByTagName("browzine-mod"));
-        console.log(element[0].getElementsByTagName("browzine-mod")[0]);
+        // var element = getElement(scope);
+        var element = element[0].getElementsByTagName("browzine-mod")[0];
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
           var template = directToPDFTemplate(directToPDFUrl);
