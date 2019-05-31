@@ -1,4 +1,4 @@
-import * as browzine from "browzine-primo-adapter";
+import "./browzine-primo-adapter";
 
 angular.module('browzineMod', [])
   .controller('browzineController', ['$scope', function ($scope) {
