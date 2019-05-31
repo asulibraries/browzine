@@ -417,7 +417,11 @@ browzine.primo = (function() {
 
         if(browzineWebLink && browzineEnabled && isArticle(scope) && showArticleBrowZineWebLinkText()) {
           var template = browzineWebLinkTemplate(scope, browzineWebLink);
-          element.append(template);
+          var elementParent = getElementParent(element);
+          console.log(elementParent);
+          // if (elementParent is the full record){
+          //   element.append(template);
+          // }
         }
 
         if(coverImageUrl && !defaultCoverImage && showJournalCoverImages()) {
