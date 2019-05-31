@@ -473,3 +473,4 @@ browzine.primo = (function() {
     getScope: getScope,
   };
 }());
+module.exports = browzine.primo;
