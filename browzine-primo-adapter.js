@@ -401,6 +401,17 @@ browzine.primo = (function() {
         // if (browzineMod) {
         //   element = browzineMod;
         // }
+        var browzineMod = null;
+        for(var i=0; i<element.childNodes.length; i++){
+          if (element.childNodes[i].name = "browzine-mod"){
+            browzineMod = element.childNodes[i];
+            break;
+          }
+        }
+        if (browzineMod){
+          element = browzineMod;
+        }
+        console.log(browzineMod);
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
           var template = directToPDFTemplate(directToPDFUrl);
@@ -408,10 +419,6 @@ browzine.primo = (function() {
           (function poll() {
             var elementParent = getElementParent(element);
             var availabilityLine = elementParent.querySelector("prm-search-result-availability-line .layout-align-start-start");
-            var browzineMod = element[0].getElementsByTagName("browzine-mod");
-            if (browzineMod) {
-              element = browzineMod;
-            }
             if(availabilityLine) {
               // availabilityLine.insertAdjacentHTML('afterbegin', template);
               element.append(template);
@@ -419,11 +426,6 @@ browzine.primo = (function() {
               requestAnimationFrame(poll);
             }
           })();
-        }
-
-        var browzineMod = element[0].getElementsByTagName("browzine-mod");
-        if (browzineMod){
-          element = browzineMod;
         }
 
         if(browzineWebLink && browzineEnabled && isJournal(scope) && showJournalBrowZineWebLinkText()) {
