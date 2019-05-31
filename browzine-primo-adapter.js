@@ -394,14 +394,13 @@ browzine.primo = (function() {
 
         var element = getElement(scope);
         // console.log(element.childNodes);
-        console.log(element[0].childNodes);
-        console.log(element[0].getElementsByTagName("browzine-mod"));
-        console.log(browzineMod);
-        var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
-        console.log(browzineMod);
-        if (browzineMod) {
-          element = browzineMod;
-        }
+        // console.log(element[0].childNodes);
+        // console.log(element[0].getElementsByTagName("browzine-mod"));
+        // console.log(browzineMod);
+        // console.log(browzineMod);
+        // if (browzineMod) {
+        //   element = browzineMod;
+        // }
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
           var template = directToPDFTemplate(directToPDFUrl);
@@ -409,14 +408,20 @@ browzine.primo = (function() {
           (function poll() {
             var elementParent = getElementParent(element);
             var availabilityLine = elementParent.querySelector("prm-search-result-availability-line .layout-align-start-start");
+            var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
 
             if(availabilityLine) {
               // availabilityLine.insertAdjacentHTML('afterbegin', template);
-              element.append(template);
+              browzineMod.append(template);
             } else {
               requestAnimationFrame(poll);
             }
           })();
+        }
+
+        var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
+        if (browzineMod){
+          element = browzineMod;
         }
 
         if(browzineWebLink && browzineEnabled && isJournal(scope) && showJournalBrowZineWebLinkText()) {
