@@ -417,7 +417,7 @@ browzine.primo = (function() {
 
         if(browzineWebLink && browzineEnabled && isArticle(scope) && showArticleBrowZineWebLinkText()) {
           var template = browzineWebLinkTemplate(scope, browzineWebLink);
-          var elementParent = getElementParent(element);
+          var elementParent = getElementParent(getElementParent(getElementParent(getElementParent(element))));
           console.log(elementParent);
           // if (elementParent is the full record){
           //   element.append(template);
