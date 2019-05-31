@@ -1,9 +1,12 @@
+import * as browzine from "browzine-primo-adapter";
+
 angular.module('browzineMod', [])
   .controller('browzineController', ['$scope', function ($scope) {
     var self = this;
 
     self.$onInit = function () {
       $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
+      window.browzine.primo = browzine;
       window.browzine.primo.searchResult($scope);
     }
 
