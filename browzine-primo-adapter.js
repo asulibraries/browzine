@@ -400,7 +400,7 @@ browzine.primo = (function() {
         var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
         console.log(browzineMod);
         if (browzineMod) {
-          element = browzineMode;
+          element = browzineMod;
         }
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
