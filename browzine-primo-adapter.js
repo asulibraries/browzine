@@ -418,13 +418,10 @@ browzine.primo = (function() {
         if(browzineWebLink && browzineEnabled && isArticle(scope) && showArticleBrowZineWebLinkText()) {
           var template = browzineWebLinkTemplate(scope, browzineWebLink);
           var elementParent = getElementParent(element);
-          console.log(elementParent);
-          console.log(elementParent.getAttribute("[is-full-view]"))
-          console.log(elementParent.parentElement.getAttribute("[is-full-view]"));
-          // console.log(element[0].offsetParent);
-          // if (elementParent is the full record){
-          //   element.append(template);
-          // }
+          var isFullView = elementParent.parentElement.getAttribute("[is-full-view]");
+          if (isFullView){
+            element.append(template);
+          }
         }
 
         if(coverImageUrl && !defaultCoverImage && showJournalCoverImages()) {
