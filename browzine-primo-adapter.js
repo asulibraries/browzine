@@ -408,18 +408,20 @@ browzine.primo = (function() {
           (function poll() {
             var elementParent = getElementParent(element);
             var availabilityLine = elementParent.querySelector("prm-search-result-availability-line .layout-align-start-start");
-            var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
-
+            var browzineMod = element[0].getElementsByTagName("browzine-mod");
+            if (browzineMod) {
+              element = browzineMod;
+            }
             if(availabilityLine) {
               // availabilityLine.insertAdjacentHTML('afterbegin', template);
-              browzineMod.append(template);
+              element.append(template);
             } else {
               requestAnimationFrame(poll);
             }
           })();
         }
 
-        var browzineMod = element[0].getElementsByTagName("browzine-mod")[0];
+        var browzineMod = element[0].getElementsByTagName("browzine-mod");
         if (browzineMod){
           element = browzineMod;
         }
