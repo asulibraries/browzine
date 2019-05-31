@@ -417,8 +417,10 @@ browzine.primo = (function() {
 
         if(browzineWebLink && browzineEnabled && isArticle(scope) && showArticleBrowZineWebLinkText()) {
           var template = browzineWebLinkTemplate(scope, browzineWebLink);
-          var elementParent = getElementParent(getElementParent(element));
+          var elementParent = getElementParent(element);
           console.log(elementParent);
+          console.log(elementParent.parentElement);
+          console.log(element.offsetParent);
           // if (elementParent is the full record){
           //   element.append(template);
           // }
