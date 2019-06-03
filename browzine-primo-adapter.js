@@ -393,6 +393,7 @@ browzine.primo = (function() {
         var directToPDFUrl = getDirectToPDFUrl(scope, data);
 
         var element = getElement(scope);
+        console.log(element);
         // console.log(element.childNodes);
         // console.log(element[0].childNodes);
         // console.log(element[0].getElementsByTagName("browzine-mod"));
