@@ -16,8 +16,12 @@ angular.module('browzineMod', [])
       self.data = null;
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
-      self.getData();
       self.result = getResult();
+      if(self.browzineEnabled && self.result){
+        console.log("we're enabled and have a result");
+        self.getData();
+        console.log(self.data);
+      }
     }
 
 
@@ -170,7 +174,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;' ng-if='{{directToPDFUrl && isArticle() && articlePDFDownloadLinkEnabled && browzineEnabled}}'>\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;' ng-if='directToPDFUrl && isArticle() && articlePDFDownloadLinkEnabled && browzineEnabled'>\
     <a class='browzine-direct-to-pdf-link' href='{{directToPDFUrl}}' target='_blank'>\
           <img src='{{pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16'/>\
           <span class='browzine-web-link-text'>{{articlePDFDownloadLinkText}}</span>\
