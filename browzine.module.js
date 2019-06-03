@@ -4,10 +4,20 @@ angular.module('browzineMod', [])
 
     self.$onInit = function () {
       $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
-      // window.browzine.primo.searchResult($scope);
-      // console.log(self.prmSearchResultAvailabilityLine);
-      // console.log(self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item);
-      console.log(self.getResult());
+      // connect these to the config later;
+      self.browzineEnabled = true; //connect to config later
+      self.journalCoverImagesEnabled = true; //connect to cnofig later
+      self.journalBrowZineWebLinkTextEnabled = true;
+      self.journalBrowZineWebLinkText = "View Journal Contents (Browzine coverage)";self.acticleBrowZineWebLinkTextEnabled = true;
+      self.articleBrowZineWebLinkText = "View Issue Contents";
+      self.articlePDFDownloadLinkEnabled = true;
+      self.articlePDFDownloadLinkText = "View PDF";
+      self.printRecordsIntegrationEnabled = true;
+      self.data = null;
+      self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
+      self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
+      self.getData();
+      self.result = getResult();
     }
 
 
@@ -65,28 +75,93 @@ angular.module('browzineMod', [])
     // };
 
 
-    // self.isArticle = function() {
-    //   var validation = false;
-    //   var result = getResult();
+    self.isArticle = function() {
+      var validation = false;
+      var result = self.result;
 
-    //   if (result && result.pnx) {
-    //     if (result.pnx.display && result.pnx.display.type) {
-    //       var contentType = result.pnx.display.type[0].trim().toLowerCase();
+      if (result && result.pnx) {
+        if (result.pnx.display && result.pnx.display.type) {
+          var contentType = result.pnx.display.type[0].trim().toLowerCase();
 
-    //       if (contentType === "article") {
-    //         validation = true;
-    //       }
-    //     }
-    //   }
-    //   console.log(result);
-    //   console.log("isArticle " + validation);
+          if (contentType === "article") {
+            validation = true;
+          }
+        }
+      }
+      console.log(result);
+      console.log("isArticle " + validation);
 
-    //   return validation;
-    // };
+      return validation;
+    };
 
     self.getResult = function() {
-      console.log("in get reslt");
       return self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item;
+    };
+
+    self.directToPDFUrl = function() {
+      if (self.data.fullTextFile) {
+        return data.fullTextFile;
+      }
+      return null;
+    };
+
+    self.getData = function() {
+      var URL = "";
+      if (self.isArticle()){
+        URL = self.api + "/articles/doi/" + self.doi() + "?include=journal";
+      }
+      if (self.isJournal()){
+        URL = self.api + "/search?issns=" + self.issn();
+      }
+      URL += "&access_token" + self.apiKey;
+      $http.jsonp(URL, {jsonpCallbackParam: 'callback'}).then(function(response){
+        self.data = response.data;
+      }, function(error){
+        console.log(error);
+      });
+    };
+
+    self.doi = function(){
+      var doi = "";
+      var result = self.result;
+      if (result && result.pnx) {
+        if (result.pnx.addata && result.pnx.addata.doi) {
+          if (result.pnx.addata.doi[0]) {
+            doi = result.pnx.addata.doi[0].trim();
+          }
+        }
+      }
+
+      return encodeURIComponent(doi);
+    };
+
+    self.issn = function(){
+      var issn = "";
+      var result = self.result;
+
+      if (result && result.pnx && result.pnx.addata) {
+        if (result.pnx.addata.issn) {
+          if (result.pnx.addata.issn.length > 1) {
+            issn = result.pnx.addata.issn.join(",").trim().replace(/-/g, "");
+          } else {
+            if (result.pnx.addata.issn[0]) {
+              issn = result.pnx.addata.issn[0].trim().replace("-", "");
+            }
+          }
+        }
+
+        if (result.pnx.addata.eissn && !issn) {
+          if (result.pnx.addata.eissn.length > 1) {
+            issn = result.pnx.addata.eissn.join(",").trim().replace(/-/g, "");
+          } else {
+            if (result.pnx.addata.eissn[0]) {
+              issn = result.pnx.addata.eissn[0].trim().replace("-", "");
+            }
+          }
+        }
+      }
+
+      return encodeURIComponent(issn);
     };
 
   }])
@@ -95,7 +170,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'>\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;' ng-if='{{directToPDFUrl && isArticle() && articlePDFDownloadLinkEnabled && browzineEnabled}}'>\
     <a class='browzine-direct-to-pdf-link' href='{{directToPDFUrl}}' target='_blank'>\
           <img src='{{pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16'/>\
           <span class='browzine-web-link-text'>{{articlePDFDownloadLinkText}}</span>\
