@@ -402,9 +402,9 @@ browzine.primo = (function() {
         //   element = browzineMod;
         // }
         var browzineMod = null;
-        for(var i=0; i<element.childNodes.length; i++){
-          if (element.childNodes[i].name = "browzine-mod"){
-            browzineMod = element.childNodes[i];
+        for(var i=0; i<element[0].childNodes.length; i++){
+          if (element[0].childNodes[i].name = "browzine-mod"){
+            browzineMod = element[0].childNodes[i];
             break;
           }
         }
