@@ -5,8 +5,9 @@ angular.module('browzineMod', [])
     self.$onInit = function () {
       $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // window.browzine.primo.searchResult($scope);
-      console.log(self.prmSearchResultAvailabilityLine);
-      console.log(self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item);
+      // console.log(self.prmSearchResultAvailabilityLine);
+      // console.log(self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item);
+      console.log(self.getResult());
     }
 
 
