@@ -6,7 +6,7 @@ angular.module('browzineMod', [])
       $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // window.browzine.primo.searchResult($scope);
       console.log(self.prmSearchResultAvailabilityLine);
-      console.log(self.getResult());
+      console.log(self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item);
     }
 
 
@@ -83,8 +83,9 @@ angular.module('browzineMod', [])
     //   return validation;
     // };
 
-    self.getResult = function(){
-      self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item;
+    self.getResult = function() {
+      console.log("in get reslt");
+      return self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item;
     };
 
   }])
