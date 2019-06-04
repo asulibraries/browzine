@@ -62,7 +62,7 @@ angular.module('browzineMod', [])
     self.getData = function() {
       console.log("in getData");
       var URL = "";
-      var self = vm;
+      var vm = self;
 
       if (self.isJournal()) {
         URL = self.api + "/search?issns=" + self.issn();
