@@ -62,6 +62,7 @@ angular.module('browzineMod', [])
     self.getData = function() {
       console.log("in getData");
       var URL = "";
+      var self = vm;
 
       if (self.isJournal()) {
         URL = self.api + "/search?issns=" + self.issn();
@@ -73,7 +74,7 @@ angular.module('browzineMod', [])
         URL += "&access_token=" + self.apiKey;
         console.log(URL);
         $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-          self.data = response.data;
+          vm.data = response.data;
         }, function (error) {
           // console.log(error);
         });
