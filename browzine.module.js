@@ -75,10 +75,12 @@ angular.module('browzineMod', [])
         console.log(URL);
         $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
           vm.data = response.data;
+          console.log(vm.data);
         }, function (error) {
           // console.log(error);
         });
       }
+      self.data = vm.data;
     };
 
     self.isArticle = function() {
