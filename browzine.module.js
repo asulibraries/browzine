@@ -69,7 +69,7 @@ angular.module('browzineMod', [])
         URL = self.api + "/articles/doi/" + self.doi() + "?include=journal";
       }
       if (URL){
-        URL += "&access_token" + self.apiKey;
+        URL += "&access_token=" + self.apiKey;
         console.log(URL);
         $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
           self.data = response.data;
