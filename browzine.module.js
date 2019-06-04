@@ -13,7 +13,7 @@ angular.module('browzineMod', [])
       self.articlePDFDownloadLinkEnabled = true;
       self.articlePDFDownloadLinkText = "View PDF";
       self.printRecordsIntegrationEnabled = true;
-      self.data = null;
+      self.data = {};
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       self.result = self.getResult();
@@ -62,6 +62,7 @@ angular.module('browzineMod', [])
     self.getData = function() {
       console.log("in getData");
       var URL = "";
+
       if (self.isJournal()) {
         URL = self.api + "/search?issns=" + self.issn();
       }
@@ -74,7 +75,7 @@ angular.module('browzineMod', [])
         $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
           self.data = response.data;
         }, function (error) {
-          console.log(error);
+          // console.log(error);
         });
       }
     };
@@ -92,8 +93,8 @@ angular.module('browzineMod', [])
           }
         }
       }
-      console.log(result);
-      console.log("isArticle " + validation);
+      // console.log(result);
+      // console.log("isArticle " + validation);
 
       return validation;
     };
@@ -111,8 +112,8 @@ angular.module('browzineMod', [])
           }
         }
       }
-      console.log(result);
-      console.log("isJournal " + validation);
+      // console.log(result);
+      // console.log("isJournal " + validation);
       return validation;
     }
 
@@ -176,7 +177,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;' ng-if='$ctrl.directToPDFUrl && $ctrl.isArticle() && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled'>\
+    template: "{{$ctrl.browzineEnabled}}{{$ctrl.isArticle()}}<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;' ng-if='$ctrl.directToPDFUrl && $ctrl.isArticle() && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled'>\
     <a class='browzine-direct-to-pdf-link' href='{{directToPDFUrl}}' target='_blank'>\
           <img src='{{pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16'/>\
           <span class='browzine-web-link-text'>{{articlePDFDownloadLinkText}}</span>\
