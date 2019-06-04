@@ -1,7 +1,7 @@
 {
     "name": "primo-explore-browzine",
     "description": "a wrapper for the browzine integration with primo that will allow you to have multiple prmSearchResultAvailabilityLineAfter components",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "main": "index.js",
     "repository": {
         "type": "git",
