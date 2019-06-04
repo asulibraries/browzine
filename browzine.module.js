@@ -16,7 +16,7 @@ angular.module('browzineMod', [])
       self.data = null;
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
-      self.result = getResult();
+      self.result = self.getResult();
       if(self.browzineEnabled && self.result){
         console.log("we're enabled and have a result");
         self.getData();
@@ -30,11 +30,11 @@ angular.module('browzineMod', [])
     //   var validation = false;
 
     //   if (!isFiltered($scope)) {
-    //     if (isJournal($scope) && getIssn($scope)) {
+    //     if (self.isJournal() && self.issn()) {
     //       validation = true;
     //     }
 
-    //     if (isArticle($scope) && getDoi($scope)) {
+    //     if (self.isArticle() && self.doi()) {
     //       validation = true;
     //     }
     //   }
@@ -44,7 +44,7 @@ angular.module('browzineMod', [])
 
     // self.isFiltered() = function () {
     //   var validation = false;
-    //   var result = getResult();
+    //   var result = self.result;
 
     //   if (result && result.delivery) {
     //     if (result.delivery.deliveryCategory) {
@@ -59,25 +59,22 @@ angular.module('browzineMod', [])
     //   return validation;
     // };
 
-
-    // self.isJournal = function() {
-    //   var validation = false;
-    //   var result = getResult();
-
-    //   if (result && result.pnx) {
-    //     if (result.pnx.display && result.pnx.display.type) {
-    //       var contentType = result.pnx.display.type[0].trim().toLowerCase();
-
-    //       if (contentType === "journal") {
-    //         validation = true;
-    //       }
-    //     }
-    //   }
-    //   console.log(result);
-    //   console.log("isJournal " + validation);
-    //   return validation;
-    // };
-
+    self.getData = function() {
+      console.log("in getData");
+      var URL = "";
+      if (self.newIsJournal()) {
+        URL = self.api + "/search?issns=" + self.issn();
+      }
+      if (self.isArticle()) {
+        URL = self.api + "/articles/doi/" + self.doi() + "?include=journal";
+      }
+      URL += "&access_token" + self.apiKey;
+      $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+        self.data = response.data;
+      }, function (error) {
+        console.log(error);
+      });
+    };
 
     self.isArticle = function() {
       var validation = false;
@@ -98,6 +95,28 @@ angular.module('browzineMod', [])
       return validation;
     };
 
+    self.newIsJournal = function(){
+      var validation = false;
+      var result = self.result;
+
+      if (result && result.pnx) {
+        if (result.pnx.display && result.pnx.display.type) {
+          var contentType = result.pnx.display.type[0].trim().toLowerCase();
+
+          if (contentType === "journal") {
+            validation = true;
+          }
+        }
+      }
+      console.log(result);
+      console.log("isJournal " + validation);
+      return validation;
+    }
+
+    self.isJournal = function() {
+
+    };
+
     self.getResult = function() {
       return self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item;
     };
@@ -107,22 +126,6 @@ angular.module('browzineMod', [])
         return data.fullTextFile;
       }
       return null;
-    };
-
-    self.getData = function() {
-      var URL = "";
-      if (self.isArticle()){
-        URL = self.api + "/articles/doi/" + self.doi() + "?include=journal";
-      }
-      if (self.isJournal()){
-        URL = self.api + "/search?issns=" + self.issn();
-      }
-      URL += "&access_token" + self.apiKey;
-      $http.jsonp(URL, {jsonpCallbackParam: 'callback'}).then(function(response){
-        self.data = response.data;
-      }, function(error){
-        console.log(error);
-      });
     };
 
     self.doi = function(){
@@ -182,7 +185,7 @@ angular.module('browzineMod', [])
       </a>\
   </div>\
   <div class='browzine' style='line-height: 1.4em;'>\
-      <a class='browzine-web-link' href='{{browzineWebLink}}' target='_blank'>\
+      <a class='browzine-web-link' href='{{browzineWebLink}}' target='_blank' ng-if='browzineEnabled && isArticle()'>\
           <img src='{{bookIcon}}' class='browzine-book-icon' style='margin-bottom: -2px; margin-right: 2.5px;' aria-hidden='true' width='15' height='15'/>\
           <span class='browzine-web-link-text'>{{browzineWebLinkText}}</span>\
           <md-icon md-svg-icon='primo-ui:open-in-new' class='md-primoExplore-theme' aria-hidden='true' style='height: 15px; width: 15px; min-height: 15px; min-width: 15px; margin-top: -2px;'><svg width='100%' height='100%' style='color: #757575;' viewBox='0 0 24 24' y='504' xmlns='http://www.w3.org/2000/svg' fit='' preserveAspectRatio='xMidYMid meet' focusable='false'><path d='M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z'></path></svg></md-icon>\
