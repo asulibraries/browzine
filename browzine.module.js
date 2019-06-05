@@ -16,6 +16,7 @@ angular.module('browzineMod', [])
       self.data = {};
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
+      console.log("initializing browzine");
       self.result = self.getResult();
       if(self.browzineEnabled && self.result){
         console.log("we're enabled and have a result");

@@ -394,25 +394,25 @@ browzine.primo = (function() {
 
         var element = getElement(scope);
         console.log(element);
-        // console.log(element.childNodes);
-        // console.log(element[0].childNodes);
-        // console.log(element[0].getElementsByTagName("browzine-mod"));
-        // console.log(browzineMod);
-        // console.log(browzineMod);
-        // if (browzineMod) {
+        // // console.log(element.childNodes);
+        // // console.log(element[0].childNodes);
+        // // console.log(element[0].getElementsByTagName("browzine-mod"));
+        // // console.log(browzineMod);
+        // // console.log(browzineMod);
+        // // if (browzineMod) {
+        // //   element = browzineMod;
+        // // }
+        // var browzineMod = null;
+        // for(var i=0; i<element[0].childNodes.length; i++){
+        //   if (element[0].childNodes[i].name = "browzine-mod"){
+        //     browzineMod = element[0].childNodes[i];
+        //     break;
+        //   }
+        // }
+        // if (browzineMod){
         //   element = browzineMod;
         // }
-        var browzineMod = null;
-        for(var i=0; i<element[0].childNodes.length; i++){
-          if (element[0].childNodes[i].name = "browzine-mod"){
-            browzineMod = element[0].childNodes[i];
-            break;
-          }
-        }
-        if (browzineMod){
-          element = browzineMod;
-        }
-        console.log(browzineMod);
+        // console.log(browzineMod);
 
         if(directToPDFUrl && isArticle(scope) && showDirectToPDFLink() && browzineEnabled) {
           var template = directToPDFTemplate(directToPDFUrl);
@@ -436,11 +436,11 @@ browzine.primo = (function() {
 
         if(browzineWebLink && browzineEnabled && isArticle(scope) && showArticleBrowZineWebLinkText()) {
           var template = browzineWebLinkTemplate(scope, browzineWebLink);
-          var elementParent = getElementParent(element);
-          var isFullView = elementParent.parentElement.getAttribute("[is-full-view]");
-          if (isFullView){
+          // var elementParent = getElementParent(element);
+          // var isFullView = elementParent.parentElement.getAttribute("[is-full-view]");
+          // if (isFullView){
             element.append(template);
-          }
+          // }
         }
 
         if(coverImageUrl && !defaultCoverImage && showJournalCoverImages()) {
