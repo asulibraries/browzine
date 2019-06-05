@@ -8,7 +8,7 @@ angular.module('browzineMod', [])
       self.browzineEnabled = true; //connect to config later
       self.journalCoverImagesEnabled = true; //connect to cnofig later
       self.journalBrowZineWebLinkTextEnabled = true;
-      self.journalBrowZineWebLinkText = "View Journal Contents (Browzine coverage)";self.acticleBrowZineWebLinkTextEnabled = true;
+      self.journalBrowZineWebLinkText = "View Journal Contents (Browzine coverage";self.acticleBrowZineWebLinkTextEnabled = true;
       self.articleBrowZineWebLinkText = "View Issue Contents";
       self.articlePDFDownloadLinkEnabled = true;
       self.articlePDFDownloadLinkText = "View PDF";
