@@ -18,6 +18,7 @@ angular.module('browzineMod', [])
       self.articlePDFDownloadLinkEnabled = true;
       self.articlePDFDownloadLinkText = "View PDF";
       self.printRecordsIntegrationEnabled = true;
+      self.browzineWebLinkText = "";
       self.data = {};
       self.pdfIcon = "https://assets.thirdiron.com/images/integrations/browzine-pdf-download-icon.svg";
       self.bookIcon = "https://assets.thirdiron.com/images/integrations/browzine-open-book-icon.svg";
@@ -113,7 +114,9 @@ angular.module('browzineMod', [])
       }
       // console.log(result);
       // console.log("isArticle " + validation);
-
+      if (validation){
+        self.browzineWebLinkText = self.articleBrowZineWebLinkText;
+      }
       return validation;
     };
 
@@ -132,6 +135,9 @@ angular.module('browzineMod', [])
       }
       // console.log(result);
       // console.log("isJournal " + validation);
+      if (validation) {
+        self.browzineWebLinkText = self.journalBrowZineWebLinkText;
+      }
       return validation;
     }
 
