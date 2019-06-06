@@ -162,7 +162,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.directToPDFUrl() && $ctrl.isArticle() &&              $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled' >\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.directToPDFUrl() != null && $ctrl.isArticle() &&              $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled' >\
         <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl()}}' target='_blank'>\
         <img src='{{$ctrl.pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
         <span class='browzine-web-link-text'>{{ $ctrl.articlePDFDownloadLinkText }}</span>\
