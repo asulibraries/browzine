@@ -95,7 +95,8 @@ angular.module('browzineMod', [])
         //     console.log(JSON.parse(request.response));
         //   }
         // }
-        $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+        // $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+        $http.get(URL).then(function(response) {
           vm.data = response.data;
           console.log(vm.data);
         }, function (error) {
