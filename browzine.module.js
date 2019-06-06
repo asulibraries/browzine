@@ -19,6 +19,7 @@ angular.module('browzineMod', [])
       self.articlePDFDownloadLinkText = "View PDF";
       self.printRecordsIntegrationEnabled = true;
       self.data = {};
+      self.pdfIcon = "https://assets.thirdiron.com/images/integrations/browzine-pdf-download-icon.svg";
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       console.log("initializing browzine");
@@ -29,6 +30,11 @@ angular.module('browzineMod', [])
         // console.log("we're enabled and have a result");
         self.getData();
         console.log(self.data);
+        self.browzineWebLink = null;
+
+        if (self.data && self.data.browzineWebLink) {
+          self.browzineWebLink = self.data.browzineWebLink;
+        }
       }
     }
 
@@ -80,22 +86,7 @@ angular.module('browzineMod', [])
       }
       if (URL){
         URL += "&access_token=" + self.apiKey;
-        console.log(URL);
-
-        // var request = new XMLHttpRequest();
-        // request.open("GET", URL, true);
-        // request.setRequestHeader("Content-type", "application/json");
-
-        // request.onload = function () {
-        //   if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-        //     var response = JSON.parse(request.response);
-        //     vm.data = response.data;
-        //     console.log(self.data);
-        //   } else if (request.readyState == XMLHttpRequest.DONE && request.status != 200){
-        //     console.log(JSON.parse(request.response));
-        //   }
-        // }
-        // $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+        // console.log(URL);
         $http.get(URL).then(function(response) {
           vm.data = response.data;
           self.data = vm.data;
@@ -210,7 +201,7 @@ angular.module('browzineMod', [])
         <md-icon md-svg-icon='primo-ui:open-in-new' class='md-primoExplore-theme' aria-hidden='true' style='height: 15px; width: 15px; min-height: 15px; min-width: 15px; margin-top: -2px;'><svg width='100%' height='100%' viewBox='0 0 24 24' y='504' xmlns='http://www.w3.org/2000/svg' style='color: #757575;' fit='' preserveAspectRatio='xMidYMid meet' focusable='false'><path d='M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z'></path></svg></md-icon>\
         </a>\
       </div >\
-      <div class='browzine' style='line-height: 1.4em;' ng-if='$ctrl.browzineEnabled && ($ctrl.isArticle() || $ctrl.isJournal()) && $ctrl.data'>\
+      <div class='browzine' style='line-height: 1.4em;' ng-if='$ctrl.browzineEnabled && ($ctrl.isArticle() || $ctrl.isJournal()) && $ctrl.data != {}'>\
       <a class='browzine-web-link' href='{{$ctrl.browzineWebLink}}' target='_blank'>\
           <img src='{{$ctrl.bookIcon}}' class='browzine-book-icon' style='margin-bottom: -2px; margin-right: 2.5px;' aria-hidden='true' width='15' height='15'/>\
           <span class='browzine-web-link-text'>{{$ctrl.browzineWebLinkText}}</span>\
