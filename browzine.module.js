@@ -20,6 +20,7 @@ angular.module('browzineMod', [])
       self.printRecordsIntegrationEnabled = true;
       self.data = {};
       self.pdfIcon = "https://assets.thirdiron.com/images/integrations/browzine-pdf-download-icon.svg";
+      self.bookIcon = "https://assets.thirdiron.com/images/integrations/browzine-open-book-icon.svg";
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       console.log("initializing browzine");
@@ -140,7 +141,7 @@ angular.module('browzineMod', [])
 
     self.directToPDFUrl = function() {
       if (self.data.fullTextFile) {
-        return data.fullTextFile;
+        return self.data.fullTextFile;
       }
       return null;
     };
