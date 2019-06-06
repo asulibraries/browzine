@@ -76,23 +76,25 @@ angular.module('browzineMod', [])
       if (URL){
         URL += "&access_token=" + self.apiKey;
         console.log(URL);
-        // var request = new XMLHttpRequest();
-        // request.open("GET", URL, true);
-        // request.setRequestHeader("Content-type", "application/json");
+        var request = new XMLHttpRequest();
+        request.open("GET", URL, true);
+        request.setRequestHeader("Content-type", "application/json");
 
-        // request.onload = function () {
-        //   if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-        //     var response = JSON.parse(request.response);
-        //     vm.data = response.data;
-        //     console.log(self.data);
-        //   }
-        // }
-        $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-          vm.data = response.data;
-          console.log(vm.data);
-        }, function (error) {
-          console.log(error);
-        });
+        request.onload = function () {
+          if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+            var response = JSON.parse(request.response);
+            vm.data = response.data;
+            console.log(self.data);
+          } else if (request.readyState == XMLHttpRequest.DONE && request.status != 200){
+            console.log(JSON.parse(request.response));
+          }
+        }
+        // $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+        //   vm.data = response.data;
+        //   console.log(vm.data);
+        // }, function (error) {
+        //   console.log(error);
+        // });
       }
       self.data = vm.data;
     };
