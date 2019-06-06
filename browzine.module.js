@@ -10,11 +10,12 @@ angular.module('browzineMod', [])
     self.$onInit = function () {
       // $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // connect these to the config later;
+      console.log(self);
       self.browzineEnabled = true; //connect to config later
       self.journalCoverImagesEnabled = true; //connect to cnofig later
       self.journalBrowZineWebLinkTextEnabled = true;
-      self.journalBrowZineWebLinkText = "View Journal Contents (Browzine coverage";self.acticleBrowZineWebLinkTextEnabled = true;
-      self.articleBrowZineWebLinkText = "View Issue Contents";
+      self.journalBrowZineWebLinkText = "View journal contents (Browzine coverage)";self.acticleBrowZineWebLinkTextEnabled = true;
+      self.articleBrowZineWebLinkText = "View issue contents";
       self.articlePDFDownloadLinkEnabled = true;
       self.articlePDFDownloadLinkText = "View PDF";
       self.printRecordsIntegrationEnabled = true;
@@ -39,41 +40,6 @@ angular.module('browzineMod', [])
         }
       }
     }
-
-
-
-    // self.shouldEnhance() = function () {
-    //   var validation = false;
-
-    //   if (!isFiltered($scope)) {
-    //     if (self.isJournal() && self.issn()) {
-    //       validation = true;
-    //     }
-
-    //     if (self.isArticle() && self.doi()) {
-    //       validation = true;
-    //     }
-    //   }
-
-    //   return validation;
-    // };
-
-    // self.isFiltered() = function () {
-    //   var validation = false;
-    //   var result = self.result;
-
-    //   if (result && result.delivery) {
-    //     if (result.delivery.deliveryCategory) {
-    //       var deliveryCategory = result.delivery.deliveryCategory[0].trim().toLowerCase();
-
-    //       if (deliveryCategory === "alma-p" && !showPrintRecords()) {
-    //         validation = true;
-    //       }
-    //     }
-    //   }
-
-    //   return validation;
-    // };
 
     self.getData = function() {
       console.log("in getData");
@@ -112,8 +78,6 @@ angular.module('browzineMod', [])
           }
         }
       }
-      // console.log(result);
-      // console.log("isArticle " + validation);
       if (validation){
         self.browzineWebLinkText = self.articleBrowZineWebLinkText;
       }
@@ -133,8 +97,6 @@ angular.module('browzineMod', [])
           }
         }
       }
-      // console.log(result);
-      // console.log("isJournal " + validation);
       if (validation) {
         self.browzineWebLinkText = self.journalBrowZineWebLinkText;
       }
