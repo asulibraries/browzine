@@ -17,11 +17,11 @@ angular.module('browzineMod', [])
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       console.log("initializing browzine");
-      console.log(self.prmSearchResultAvailabilityLine);
-      console.log(self.browzineEnabled);
+      // console.log(self.prmSearchResultAvailabilityLine);
+      // console.log(self.browzineEnabled);
       self.result = self.getResult();
       if(self.browzineEnabled && self.result){
-        console.log("we're enabled and have a result");
+        // console.log("we're enabled and have a result");
         self.getData();
         console.log(self.data);
       }
@@ -76,23 +76,23 @@ angular.module('browzineMod', [])
       if (URL){
         URL += "&access_token=" + self.apiKey;
         console.log(URL);
-        var request = new XMLHttpRequest();
-        request.open("GET", URL, true);
-        request.setRequestHeader("Content-type", "application/json");
+        // var request = new XMLHttpRequest();
+        // request.open("GET", URL, true);
+        // request.setRequestHeader("Content-type", "application/json");
 
-        request.onload = function () {
-          if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-            var response = JSON.parse(request.response);
-            vm.data = response.data;
-            console.log(self.data);
-          }
-        }
-        // $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-          // vm.data = response.data;
-          // console.log(vm.data);
-        // }, function (error) {
-          // console.log(error);
-        // });
+        // request.onload = function () {
+        //   if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+        //     var response = JSON.parse(request.response);
+        //     vm.data = response.data;
+        //     console.log(self.data);
+        //   }
+        // }
+        $http.jsonp(URL, { jsonpCallbackParam: 'callback' }).then(function (response) {
+          vm.data = response.data;
+          console.log(vm.data);
+        }, function (error) {
+          console.log(error);
+        });
       }
       self.data = vm.data;
     };
