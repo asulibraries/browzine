@@ -17,6 +17,8 @@ angular.module('browzineMod', [])
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       console.log("initializing browzine");
+      console.log(self.prmSearchResultAvailabilityLine);
+      console.log(self.browzineEnabled);
       self.result = self.getResult();
       if(self.browzineEnabled && self.result){
         console.log("we're enabled and have a result");
@@ -181,7 +183,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em;' ng-if='$ctrl.browzineEnabled'>\
+    template: "<div class='browzine' style='line-height: 1.4em;' ng-if='$ctrl.browzineEnabled && $ctrl.isArticle()'>\
       <a class='browzine-web-link' href='{{browzineWebLink}}' target='_blank'>\
           <img src='{{bookIcon}}' class='browzine-book-icon' style='margin-bottom: -2px; margin-right: 2.5px;' aria-hidden='true' width='15' height='15'/>\
           <span class='browzine-web-link-text'>{{browzineWebLinkText}}</span>\
