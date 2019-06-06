@@ -3,7 +3,7 @@ angular.module('browzineMod', [])
     var self = this;
 
     self.$onInit = function () {
-      $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
+      // $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // connect these to the config later;
       self.browzineEnabled = true; //connect to config later
       self.journalCoverImagesEnabled = true; //connect to cnofig later
@@ -181,7 +181,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em;'>\
+    template: "<div class='browzine' style='line-height: 1.4em;' ng-if='$ctrl.browzineEnabled'>\
       <a class='browzine-web-link' href='{{browzineWebLink}}' target='_blank'>\
           <img src='{{bookIcon}}' class='browzine-book-icon' style='margin-bottom: -2px; margin-right: 2.5px;' aria-hidden='true' width='15' height='15'/>\
           <span class='browzine-web-link-text'>{{browzineWebLinkText}}</span>\
