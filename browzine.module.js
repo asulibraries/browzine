@@ -191,10 +191,11 @@ angular.module('browzineMod', [])
     self.getIncludedJournal = function(){
       var response = self.response;
       var journal = null;
-
+      console.log("in getIncludedJournal");
       if (response.included) {
         journal = Array.isArray(response.included) ? response.included[0] : response.included;
       }
+      console.log(journal);
       return journal;
     }
 
@@ -213,9 +214,6 @@ angular.module('browzineMod', [])
       var data = self.data;
       var coverImageUrl = null;
       var journal = self.journal;
-      if(!journal){
-        journal = self.getIncludedJournal();
-      }
 
       if (self.isJournalTF) {
         if (data && data.coverImageUrl) {
