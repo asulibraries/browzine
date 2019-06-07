@@ -148,10 +148,12 @@ angular.module('browzineMod', [])
       var endpoint = "";
 
       if (self.isArticleTF) {
+        if(!self.doi){self.getDoi()}
         endpoint = self.api + "/articles/doi/" + self.doi + "?include=journal";
       }
 
       if (self.isJournalTF) {
+        if(!self.issn){self.getIssn()}
         endpoint = self.api + "/search?issns=" + self.issn;
       }
 
