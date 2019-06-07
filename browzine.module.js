@@ -60,6 +60,11 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
+        self.coverImageUrl = self.getCoverImageUrl();
+        if (self.coverImageUrl && !self.isDefaultCoverImage(self.coverImageUrl)){
+          console.log(self.coverImageUrl);
+          self.prmSearchResultThumbnailContainer.selectedThumbnailLink.linkURL = self.coverImageUrl;
+        }
       }, function (error) {
         console.log(error);
       });
@@ -174,14 +179,14 @@ angular.module('browzineMod', [])
     self.getData = function(){
       var data = {};
       var response = self.response;
-      console.log(response.data);
+      // console.log(response.data);
       if (Array.isArray(response.data.data)) {
-        console.log("data is array");
+        // console.log("data is array");
         data = response.data.data.filter(function (journal) {
           return journal.browzineEnabled === true;
         }).pop();
       } else {
-        console.log("data is object");
+        // console.log("data is object");
         data = response.data.data;
       }
 
@@ -200,16 +205,16 @@ angular.module('browzineMod', [])
     self.getBrowzineWebLink = function(){
       var data = self.data;
       var browzineWebLink = null;
-      console.log("in getBrowzineWebLink");
-      console.log(data);
+      // console.log("in getBrowzineWebLink");
+      // console.log(data);
       if (data && data.browzineWebLink) {
         browzineWebLink = data.browzineWebLink;
       }
-      console.log(browzineWebLink);
+      // console.log(browzineWebLink);
       return browzineWebLink;
     }
 
-    self.getCoverImage = function(){
+    self.getCoverImageUrl = function(){
       var data = self.data;
       var coverImageUrl = null;
       var journal = self.journal;
@@ -228,6 +233,16 @@ angular.module('browzineMod', [])
 
       return coverImageUrl;
     }
+
+    self.isDefaultCoverImage = function(coverImageUrl) {
+      var defaultCoverImage = false;
+
+      if (coverImageUrl && coverImageUrl.toLowerCase().indexOf("default") > -1) {
+        defaultCoverImage = true;
+      }
+
+      return defaultCoverImage;
+    };
 
     self.getBrowzineEnabled = function(){
       var browzineEnabled = false;
@@ -261,14 +276,11 @@ angular.module('browzineMod', [])
     self.getDirectToPDFUrl = function(){
       var directToPDFUrl = null;
       var data = self.data;
-      console.log("in getDirectToPDFUrl");
-      console.log(data);
       if (self.isArticleTF && data) {
         if (data.fullTextFile) {
           directToPDFUrl = data.fullTextFile;
         }
       }
-      console.log(directToPDFUrl);
       return directToPDFUrl;
     }
 
@@ -291,7 +303,8 @@ angular.module('browzineMod', [])
   }])
   .component('browzineMod', {
     require: {
-      prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
+      prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine',
+      prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
     },
     controller: 'browzineController',
     template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
