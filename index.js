@@ -1,4 +1,4 @@
-require('./browzine.module.js');
-require('./browzineThubmnail.module.js');
-module.exports = 'browzineMod', 'browzineThumbnail';
+var browzineMod = require('./browzine.module.js');
+var browzineThumbnail = require('./browzineThubmnail.module.js');
+module.exports = {'browzineMod': browzineMod, 'browzineThumbnail': browzineThumbnail};
 

@@ -1,10 +1,4 @@
 angular.module('browzineThumbnail', [])
-    .component('browzineThumbnail', {
-        require: {
-            prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
-        },
-        controller: 'browzineThumbnailController'
-    })
     .controller('browzineThumbnailController', ['$scope', function ($scope) {
         var self = this;
         self.$onInit = function () {
@@ -12,3 +6,9 @@ angular.module('browzineThumbnail', [])
             console.log(self.prmSearchResultThumbnailContainer);
         }
     }])
+    .component('browzineThumbnail', {
+        require: {
+            prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
+        },
+        controller: 'browzineThumbnailController'
+    });
