@@ -42,17 +42,21 @@ angular.module('browzineMod', [])
         // console.log(self.data);
         self.endpoint = self.getEndpoint();
         if (self.endpoint){
-          $http.get(self.endpoint).then(function(response){
-            console.log("we got the data from browzine");
-            console.log(response.data);
-            self.data = response.data;
-            self.response = response;
-            console.log(self.response);
-          }, function(error){
-            console.log(error);
-          });
+          self.getFromEndpoint(self.endpoint);
         }
       }
+    }
+
+    self.getFromEndpoint = function(endpoint){
+      $http.get(self.endpoint).then(function (response) {
+        console.log("we got the data from browzine");
+        console.log(response.data);
+        self.data = self.getData(response);
+        self.response = response;
+        console.log(self.response);
+      }, function (error) {
+        console.log(error);
+      });
     }
 
     self.isArticle = function() {
@@ -141,16 +145,14 @@ angular.module('browzineMod', [])
       var endpoint = "";
 
       if (self.isArticleTF) {
-        var doi = self.doi;
-        endpoint = api + "/articles/doi/" + doi + "?include=journal";
+        endpoint = self.api + "/articles/doi/" + self.doi + "?include=journal";
       }
 
       if (self.isJournalTF) {
-        var issn = self.issn;
-        endpoint = api + "/search?issns=" + issn;
+        endpoint = self.api + "/search?issns=" + self.issn;
       }
 
-      endpoint += "&access_token=" + apiKey;
+      endpoint += "&access_token=" + self.apiKey;
 
       return endpoint;
     }
