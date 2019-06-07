@@ -54,9 +54,8 @@ angular.module('browzineMod', [])
       $http.get(self.endpoint).then(function (response) {
         console.log("we got the data from browzine");
         console.log(response.data);
-        self.data = self.getData(response);
         self.response = response;
-        console.log(self.response);
+        self.data = self.getData(response);
       }, function (error) {
         console.log(error);
       });
