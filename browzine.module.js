@@ -37,6 +37,8 @@ angular.module('browzineMod', [])
       self.doi = "";
       self.issn = "";
       if(self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())){
+        console.log(self.isArticleTF);
+        console.log(self.isJournalTF);
         console.log("we're enabled and have a result");
         // self.getData();
         // console.log(self.data);
@@ -153,7 +155,9 @@ angular.module('browzineMod', [])
         endpoint = self.api + "/search?issns=" + self.issn;
       }
 
-      endpoint += "&access_token=" + self.apiKey;
+      if (endpoint){
+        endpoint += "&access_token=" + self.apiKey;
+      }
 
       return endpoint;
     }
@@ -222,13 +226,13 @@ angular.module('browzineMod', [])
       var browzineEnabled = false;
       var data = self.data;
       var journal = self.journal;
-      if (!journal) {
-        journal = self.getIncludedJournal();
-      }
 
       if (self.isJournalTF) {
         if (data && data.browzineEnabled) {
           browzineEnabled = data.browzineEnabled;
+        }
+        if (!journal) {
+          journal = self.getIncludedJournal();
         }
       }
 
