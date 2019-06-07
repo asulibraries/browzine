@@ -175,9 +175,9 @@ angular.module('browzineMod', [])
       var data = {};
       var response = self.response;
       console.log(response.data);
-      if (Array.isArray(response.data)) {
+      if (Array.isArray(response.data.data)) {
         console.log("data is array");
-        data = response.data.filter(function (journal) {
+        data = response.data.data.filter(function (journal) {
           return journal.browzineEnabled === true;
         }).pop();
       } else {
