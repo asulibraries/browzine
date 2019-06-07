@@ -303,8 +303,7 @@ angular.module('browzineMod', [])
   }])
   .component('browzineMod', {
     require: {
-      prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine',
-      prmSearchResultThumbnailContainer: '^^prmSearchResultThumbnailContainer'
+      prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
     template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
@@ -323,6 +322,18 @@ angular.module('browzineMod', [])
   </div>\
   "
 
-  });
+  })
+.component('browzineThumbnail', {
+  require: {
+    prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
+  },
+  controller: 'browzineThumbnailController'
+})
+.controller('browzineThumbnailController', [function(){
+  self.$onInit = function(){
+    console.log("in browzine thumbnail controller");
+    console.log(self.prmSearchResultThumbnailContainer);
+  }
+}]);
 
 
