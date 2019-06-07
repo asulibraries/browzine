@@ -61,9 +61,9 @@ angular.module('browzineMod', [])
           self.journal = self.getIncludedJournal();
         }
         self.browzineEnabled = self.getBrowzineEnabled();
-        self.getBrowzineWebLink();
+        self.browzineWebLink = self.getBrowzineWebLink();
         console.log(self.browzineEnabled);
-        self.getDirectToPDFUrl();
+        self.directToPDFUrl = self.getDirectToPDFUrl();
       }, function (error) {
         console.log(error);
       });
@@ -193,22 +193,20 @@ angular.module('browzineMod', [])
     self.getIncludedJournal = function(){
       var response = self.data;
       var journal = null;
-      console.log("in getIncludedJournal");
       if (response.included) {
         journal = Array.isArray(response.included) ? response.included[0] : response.included;
       }
-      console.log(journal);
       return journal;
     }
 
     self.getBrowzineWebLink = function(){
       var data = self.data;
       var browzineWebLink = null;
+      console.log("in getBrowzineWebLink");
 
       if (data && data.browzineWebLink) {
         browzineWebLink = data.browzineWebLink;
       }
-      self.browzineWebLink = browzineWebLink;
       return browzineWebLink;
     }
 
@@ -264,13 +262,13 @@ angular.module('browzineMod', [])
     self.getDirectToPDFUrl = function(){
       var directToPDFUrl = null;
       var data = self.data;
+      console.log("in getDirectToPDFUrl");
 
       if (self.isArticleTF && data) {
         if (data.fullTextFile) {
           directToPDFUrl = data.fullTextFile;
         }
       }
-      self.directToPDFUrl = directToPDFUrl;
       return directToPDFUrl;
     }
 
@@ -290,14 +288,14 @@ angular.module('browzineMod', [])
 
       return validation;
     };
-
+    // && $ctrl.directToPDFUrl
   }])
   .component('browzineMod', {
     require: {
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled' >\
         <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl}}' target='_blank'>\
         <img src='{{$ctrl.pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
         <span class='browzine-web-link-text'>{{ $ctrl.articlePDFDownloadLinkText }}</span>\
