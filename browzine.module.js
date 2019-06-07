@@ -10,7 +10,7 @@ angular.module('browzineMod', [])
     self.$onInit = function () {
       // $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
       // connect these to the config later;
-      console.log(self);
+      // console.log(self);
       self.browzineEnabled = true; //connect to config later
       self.journalCoverImagesEnabled = true; //connect to cnofig later
       self.journalBrowZineWebLinkTextEnabled = true;
@@ -60,11 +60,11 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
-        self.coverImageUrl = self.getCoverImageUrl();
-        if (self.coverImageUrl && !self.isDefaultCoverImage(self.coverImageUrl)){
-          console.log(self.coverImageUrl);
-          self.prmSearchResultThumbnailContainer.selectedThumbnailLink.linkURL = self.coverImageUrl;
-        }
+        // self.coverImageUrl = self.getCoverImageUrl();
+        // if (self.coverImageUrl && !self.isDefaultCoverImage(self.coverImageUrl)){
+        //   console.log(self.coverImageUrl);
+        //   self.prmSearchResultThumbnailContainer.selectedThumbnailLink.linkURL = self.coverImageUrl;
+        // }
       }, function (error) {
         console.log(error);
       });
@@ -329,7 +329,8 @@ angular.module('browzineMod', [])
   },
   controller: 'browzineThumbnailController'
 })
-.controller('browzineThumbnailController', [function(){
+.controller('browzineThumbnailController', ['$scope', function($scope){
+  var self = this;
   self.$onInit = function(){
     console.log("in browzine thumbnail controller");
     console.log(self.prmSearchResultThumbnailContainer);
