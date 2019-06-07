@@ -57,6 +57,7 @@ angular.module('browzineMod', [])
         console.log(response.data);
         self.response = response;
         self.data = self.getData(response);
+        self.data = self.data.data;
         if (!self.journal) {
           self.journal = self.getIncludedJournal();
         }
@@ -191,7 +192,7 @@ angular.module('browzineMod', [])
     }
 
     self.getIncludedJournal = function(){
-      var response = self.data;
+      var response = self.response.data;
       var journal = null;
       if (response.included) {
         journal = Array.isArray(response.included) ? response.included[0] : response.included;
