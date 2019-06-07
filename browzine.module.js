@@ -56,6 +56,9 @@ angular.module('browzineMod', [])
         console.log(response.data);
         self.response = response;
         self.data = self.getData(response);
+        if (!self.journal) {
+          self.journal = self.getIncludedJournal();
+        }
         self.browzineEnabled = self.getBrowzineEnabled();
         self.getBrowzineWebLink();
         console.log(self.browzineEnabled);
@@ -192,7 +195,6 @@ angular.module('browzineMod', [])
       if (response.included) {
         journal = Array.isArray(response.included) ? response.included[0] : response.included;
       }
-      self.journal = journal;
       return journal;
     }
 
@@ -238,9 +240,6 @@ angular.module('browzineMod', [])
       if (self.isJournalTF) {
         if (data && data.browzineEnabled) {
           browzineEnabled = data.browzineEnabled;
-        }
-        if (!journal) {
-          journal = self.getIncludedJournal();
         }
       }
 
