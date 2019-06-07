@@ -8,22 +8,11 @@ angular.module('browzineMod', [])
     var self = this;
 
     self.$onInit = function () {
-      console.log(window.browzine);
-      console.log($window.browzine);
-      self.browzineEnabled = true; //connect to config later
-      self.journalCoverImagesEnabled = true; //connect to cnofig later
-      self.journalBrowZineWebLinkTextEnabled = true;
-      self.journalBrowZineWebLinkText = "View journal contents (Browzine coverage)";self.acticleBrowZineWebLinkTextEnabled = true;
-      self.articleBrowZineWebLinkText = "View issue contents";
-      self.articlePDFDownloadLinkEnabled = true;
-      self.articlePDFDownloadLinkText = "View PDF";
-      self.printRecordsIntegrationEnabled = true;
+      self.browzineEnabled = true;
       self.browzineWebLinkText = "";
       self.data = null;
       self.pdfIcon = "https://assets.thirdiron.com/images/integrations/browzine-pdf-download-icon.svg";
       self.bookIcon = "https://assets.thirdiron.com/images/integrations/browzine-open-book-icon.svg";
-      self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
-      self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
       self.result = self.getResult();
       self.browzineWebLink = null;
       self.isJournalTF = false;
@@ -35,9 +24,9 @@ angular.module('browzineMod', [])
       self.directToPDFUrl = "";
       if(self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())){
         if (self.isArticleTF){
-          self.browzineWebLinkText = self.articleBrowZineWebLinkText;
+          self.browzineWebLinkText = $window.browzine.articleBrowZineWebLinkText;
         } else if (self.isJournalTF){
-          self.browzineWebLinkText = self.journalBrowZineWebLinkText;
+          self.browzineWebLinkText = $window.browzine.journalBrowZineWebLinkText;
         }
         self.endpoint = self.getEndpoint();
         if (self.endpoint){
@@ -149,19 +138,19 @@ angular.module('browzineMod', [])
       if (self.isArticleTF) {
         if(!self.doi){self.getDoi()}
         if(self.doi){
-          endpoint = self.api + "/articles/doi/" + self.doi + "?include=journal";
+          endpoint = $window.browzine.api + "/articles/doi/" + self.doi + "?include=journal";
         }
       }
 
       if (self.isJournalTF) {
         if(!self.issn){self.getIssn()}
         if(self.issn){
-          endpoint = self.api + "/search?issns=" + self.issn;
+          endpoint = $window.browzine.api + "/search?issns=" + self.issn;
         }
       }
 
       if (endpoint){
-        endpoint += "&access_token=" + self.apiKey;
+        endpoint += "&access_token=" + $window.browzine.apiKey;
       }
 
       return endpoint;
@@ -261,10 +250,10 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $window.browzine.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
         <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl}}' target='_blank'>\
         <img src='{{$ctrl.pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
-        <span class='browzine-web-link-text'>{{ $ctrl.articlePDFDownloadLinkText }}</span>\
+        <span class='browzine-web-link-text'>{{ $window.browzine.articlePDFDownloadLinkText }}</span>\
         <md-icon md-svg-icon='primo-ui:open-in-new' class='md-primoExplore-theme' aria-hidden='true' style='height: 15px; width: 15px; min-height: 15px; min-width: 15px; margin-top: -2px;color: #757575;'><svg width='100%' height='100%' viewBox='0 0 24 24' y='504' xmlns='http://www.w3.org/2000/svg' fit='' preserveAspectRatio='xMidYMid meet' focusable='false'><path d='M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z'></path></svg></md-icon>\
         </a>\
       </div >\
