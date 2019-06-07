@@ -304,7 +304,7 @@ angular.module('browzineMod', [])
   .component('browzineMod', {
     require: {
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine',
-      prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
+      prmSearchResultThumbnailContainer: '^^prmSearchResultThumbnailContainer'
     },
     controller: 'browzineController',
     template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
