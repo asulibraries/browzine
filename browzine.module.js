@@ -203,10 +203,11 @@ angular.module('browzineMod', [])
       var data = self.data;
       var browzineWebLink = null;
       console.log("in getBrowzineWebLink");
-
+      console.log(data);
       if (data && data.browzineWebLink) {
         browzineWebLink = data.browzineWebLink;
       }
+      console.log(browzineWebLink);
       return browzineWebLink;
     }
 
@@ -263,12 +264,13 @@ angular.module('browzineMod', [])
       var directToPDFUrl = null;
       var data = self.data;
       console.log("in getDirectToPDFUrl");
-
+      console.log(data);
       if (self.isArticleTF && data) {
         if (data.fullTextFile) {
           directToPDFUrl = data.fullTextFile;
         }
       }
+      console.log(directToPDFUrl);
       return directToPDFUrl;
     }
 
