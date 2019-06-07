@@ -252,7 +252,7 @@ angular.module('browzineMod', [])
       var directToPDFUrl = null;
       var data = self.data;
 
-      if (self.isArticle) {
+      if (self.isArticleTF) {
         if (data.fullTextFile) {
           directToPDFUrl = data.fullTextFile;
         }
