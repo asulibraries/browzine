@@ -4,13 +4,12 @@ angular.module('browzineMod', [])
     urlWhitelist.push('https://public-api.thirdiron.com/public/v1/' + '**');
     $sceDelegateProvider.resourceUrlWhitelist(urlWhitelist);
   }])
-  .controller('browzineController', ['$scope', '$http', function ($scope, $http) {
+  .controller('browzineController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     var self = this;
 
     self.$onInit = function () {
-      // $scope.$ctrl = { 'parentCtrl': self.prmSearchResultAvailabilityLine };
-      // connect these to the config later;
-      // console.log(self);
+      console.log(window.browzine);
+      console.log($window.browzine);
       self.browzineEnabled = true; //connect to config later
       self.journalCoverImagesEnabled = true; //connect to cnofig later
       self.journalBrowZineWebLinkTextEnabled = true;
@@ -48,10 +47,7 @@ angular.module('browzineMod', [])
     }
 
     self.getFromEndpoint = function(){
-      console.log(self.endpoint);
       $http.get(self.endpoint).then(function (response) {
-        console.log("we got the data from browzine");
-        console.log(response.data);
         self.response = response;
         self.data = self.getData(response);
         if (!self.journal) {
@@ -60,11 +56,6 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
-        // self.coverImageUrl = self.getCoverImageUrl();
-        // if (self.coverImageUrl && !self.isDefaultCoverImage(self.coverImageUrl)){
-        //   console.log(self.coverImageUrl);
-        //   self.prmSearchResultThumbnailContainer.selectedThumbnailLink.linkURL = self.coverImageUrl;
-        // }
       }, function (error) {
         console.log(error);
       });
@@ -179,14 +170,11 @@ angular.module('browzineMod', [])
     self.getData = function(){
       var data = {};
       var response = self.response;
-      // console.log(response.data);
       if (Array.isArray(response.data.data)) {
-        // console.log("data is array");
         data = response.data.data.filter(function (journal) {
           return journal.browzineEnabled === true;
         }).pop();
       } else {
-        // console.log("data is object");
         data = response.data.data;
       }
 
@@ -205,44 +193,11 @@ angular.module('browzineMod', [])
     self.getBrowzineWebLink = function(){
       var data = self.data;
       var browzineWebLink = null;
-      // console.log("in getBrowzineWebLink");
-      // console.log(data);
       if (data && data.browzineWebLink) {
         browzineWebLink = data.browzineWebLink;
       }
-      // console.log(browzineWebLink);
       return browzineWebLink;
     }
-
-    self.getCoverImageUrl = function(){
-      var data = self.data;
-      var coverImageUrl = null;
-      var journal = self.journal;
-
-      if (self.isJournalTF) {
-        if (data && data.coverImageUrl) {
-          coverImageUrl = data.coverImageUrl;
-        }
-      }
-
-      if (self.isArticleTF) {
-        if (journal && journal.coverImageUrl) {
-          coverImageUrl = journal.coverImageUrl;
-        }
-      }
-
-      return coverImageUrl;
-    }
-
-    self.isDefaultCoverImage = function(coverImageUrl) {
-      var defaultCoverImage = false;
-
-      if (coverImageUrl && coverImageUrl.toLowerCase().indexOf("default") > -1) {
-        defaultCoverImage = true;
-      }
-
-      return defaultCoverImage;
-    };
 
     self.getBrowzineEnabled = function(){
       var browzineEnabled = false;
@@ -321,14 +276,4 @@ angular.module('browzineMod', [])
       </a>\
   </div>\
   "
-  })
-  .component('browzineThumbnail', {
-    require: {
-      prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
-    },
-    controller: ['$scope', function($scope) {
-      // var self = this;
-      console.log("in browzine thumbnail controller");
-      // console.log(self.prmSearchResultThumbnailContainer);
-    }]
   });
