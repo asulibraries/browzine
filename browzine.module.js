@@ -189,7 +189,7 @@ angular.module('browzineMod', [])
     }
 
     self.getIncludedJournal = function(){
-      var response = self.response;
+      var response = self.data;
       var journal = null;
       console.log("in getIncludedJournal");
       if (response.included) {
