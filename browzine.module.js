@@ -326,9 +326,9 @@ angular.module('browzineMod', [])
     require: {
       prmSearchResultThumbnailContainer: '^prmSearchResultThumbnailContainer'
     },
-    controller: function controller($scope) {
-      var self = this;
+    controller: ['$scope', function($scope) {
+      // var self = this;
       console.log("in browzine thumbnail controller");
-      console.log(self.prmSearchResultThumbnailContainer);
-    }
+      // console.log(self.prmSearchResultThumbnailContainer);
+    }]
   });
