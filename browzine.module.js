@@ -25,9 +25,6 @@ angular.module('browzineMod', [])
       self.bookIcon = "https://assets.thirdiron.com/images/integrations/browzine-open-book-icon.svg";
       self.apiKey = "a1d2656d-d27c-466f-b549-f14a645a2024";
       self.api = "https://public-api.thirdiron.com/public/v1/libraries/158";
-      console.log("initializing browzine");
-      // console.log(self.prmSearchResultAvailabilityLine);
-      // console.log(self.browzineEnabled);
       self.result = self.getResult();
       self.browzineWebLink = null;
       self.isJournalTF = false;
@@ -38,11 +35,11 @@ angular.module('browzineMod', [])
       self.issn = "";
       self.directToPDFUrl = "";
       if(self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())){
-        console.log(self.isArticleTF);
-        console.log(self.isJournalTF);
-        console.log("we're enabled and have a result");
-        // self.getData();
-        // console.log(self.data);
+        if (self.isArticleTF){
+          self.browzineWebLinkText = self.articleBrowZineWebLinkText;
+        } else if (self.isJournalTF){
+          self.browzineWebLinkText = self.journalBrowZineWebLinkText;
+        }
         self.endpoint = self.getEndpoint();
         if (self.endpoint){
           self.getFromEndpoint(self.endpoint);
@@ -57,13 +54,11 @@ angular.module('browzineMod', [])
         console.log(response.data);
         self.response = response;
         self.data = self.getData(response);
-        self.data = self.data.data;
         if (!self.journal) {
           self.journal = self.getIncludedJournal();
         }
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
-        console.log(self.browzineEnabled);
         self.directToPDFUrl = self.getDirectToPDFUrl();
       }, function (error) {
         console.log(error);
@@ -179,13 +174,15 @@ angular.module('browzineMod', [])
     self.getData = function(){
       var data = {};
       var response = self.response;
-
+      console.log(response.data);
       if (Array.isArray(response.data)) {
+        console.log("data is array");
         data = response.data.filter(function (journal) {
           return journal.browzineEnabled === true;
         }).pop();
       } else {
-        data = response.data;
+        console.log("data is object");
+        data = response.data.data;
       }
 
       return data;
