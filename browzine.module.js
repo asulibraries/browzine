@@ -36,6 +36,7 @@ angular.module('browzineMod', [])
       self.journal = null;
       self.doi = "";
       self.issn = "";
+      self.directToPDFUrl = "";
       if(self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())){
         console.log(self.isArticleTF);
         console.log(self.isJournalTF);
@@ -62,6 +63,7 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.getBrowzineWebLink();
         console.log(self.browzineEnabled);
+        self.getDirectToPDFUrl();
       }, function (error) {
         console.log(error);
       });
@@ -268,7 +270,7 @@ angular.module('browzineMod', [])
           directToPDFUrl = data.fullTextFile;
         }
       }
-
+      self.directToPDFUrl = directToPDFUrl;
       return directToPDFUrl;
     }
 
@@ -295,8 +297,8 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF &&              $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.getDirectToPDFUrl()' >\
-        <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl()}}' target='_blank'>\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl' >\
+        <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl}}' target='_blank'>\
         <img src='{{$ctrl.pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
         <span class='browzine-web-link-text'>{{ $ctrl.articlePDFDownloadLinkText }}</span>\
         <md-icon md-svg-icon='primo-ui:open-in-new' class='md-primoExplore-theme' aria-hidden='true' style='height: 15px; width: 15px; min-height: 15px; min-width: 15px; margin-top: -2px;color: #757575;'><svg width='100%' height='100%' viewBox='0 0 24 24' y='504' xmlns='http://www.w3.org/2000/svg' fit='' preserveAspectRatio='xMidYMid meet' focusable='false'><path d='M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z'></path></svg></md-icon>\
