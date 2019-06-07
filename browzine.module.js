@@ -47,7 +47,8 @@ angular.module('browzineMod', [])
       }
     }
 
-    self.getFromEndpoint = function(endpoint){
+    self.getFromEndpoint = function(){
+      console.log(self.endpoint);
       $http.get(self.endpoint).then(function (response) {
         console.log("we got the data from browzine");
         console.log(response.data);
@@ -254,7 +255,7 @@ angular.module('browzineMod', [])
       var directToPDFUrl = null;
       var data = self.data;
 
-      if (self.isArticleTF) {
+      if (self.isArticleTF && data) {
         if (data.fullTextFile) {
           directToPDFUrl = data.fullTextFile;
         }
@@ -286,7 +287,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.getDirectToPDFUrl() && $ctrl.isArticleTF &&              $ctrl.articlePDFDownloadLinkEnabled && $ctrl.getBrowzineEnabled()' >\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF &&              $ctrl.articlePDFDownloadLinkEnabled && $ctrl.getBrowzineEnabled() && $ctrl.getDirectToPDFUrl()' >\
         <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl()}}' target='_blank'>\
         <img src='{{$ctrl.pdfIcon}}' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
         <span class='browzine-web-link-text'>{{ $ctrl.articlePDFDownloadLinkText }}</span>\
