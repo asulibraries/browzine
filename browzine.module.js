@@ -31,6 +31,7 @@ angular.module('browzineMod', [])
           self.getFromEndpoint(self.endpoint);
         }
       }
+      console.log("isFullView" + $ctrl.prmSearchResultAvailabilityLine.isFullView);
     }
 
     self.getFromEndpoint = function(){
