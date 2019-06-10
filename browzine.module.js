@@ -31,7 +31,7 @@ angular.module('browzineMod', [])
           self.getFromEndpoint(self.endpoint);
         }
       }
-      console.log("isFullView" + $ctrl.prmSearchResultAvailabilityLine.isFullView);
+      console.log("isFullView" + self.prmSearchResultAvailabilityLine.isFullView);
     }
 
     self.getFromEndpoint = function(){
@@ -44,6 +44,7 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
+        console.log(self.directToPDFUrl);
       }, function (error) {
         console.log(error);
       });
