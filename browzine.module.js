@@ -44,7 +44,7 @@ angular.module('browzineMod', [])
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
-        console.log(self.directToPDFUrl);
+        console.log(self.isArticleTF && $window.browzine.articlePDFDownloadLinkEnabled && self.browzineEnabled && self.directToPDFUrl);
       }, function (error) {
         console.log(error);
       });
