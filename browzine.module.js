@@ -250,7 +250,7 @@ angular.module('browzineMod', [])
       prmSearchResultAvailabilityLine: '^prmSearchResultAvailabilityLine'
     },
     controller: 'browzineController',
-    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $window.browzine.articlePDFDownloadLinkEnabled && $ctrl.browzineEnabled && $ctrl.directToPDFUrl != null' >\
+    template: "<div class='browzine' style='line-height: 1.4em; margin-right: 4.5em;'           ng-if='$ctrl.isArticleTF && $ctrl.browzineEnabled && $ctrl.directToPDFUrl != null' >\
         <a class='browzine-direct-to-pdf-link' href='{{$ctrl.directToPDFUrl}}' target='_blank'>\
         <img src='https://assets.thirdiron.com/images/integrations/browzine-pdf-download-icon.svg' class='browzine-pdf-icon' style='margin-bottom: -3px; margin-right: 2.8px;' aria-hidden='true' width='12' height='16' />\
         <span class='browzine-web-link-text'>{{ $window.browzine.articlePDFDownloadLinkText }}</span>\
