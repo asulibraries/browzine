@@ -54,8 +54,10 @@ angular.module('browzineMod', [])
         if (self.coverImageUrl && !self.defaultCoverImage) {
           (function poll() {
             console.log("in the poll")
+            console.log($element)
             var elementParent = $element.parent();
-            var coverImages = elementParent.querySelectorAll("prm-search-result-thumbnail-container img");
+            console.log($element.parent())
+            var coverImages = elementParent[0].querySelectorAll("prm-search-result-thumbnail-container img");
 
             if (coverImages[0]) {
               if (coverImages[0].className.indexOf("fan-img") > -1) {
