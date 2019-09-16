@@ -45,6 +45,7 @@ angular.module('browzineMod', [])
         self.directToPDFUrl = self.getDirectToPDFUrl();
         self.articlePDFDownloadLinkEnabled = $window.browzine.articlePDFDownloadLinkEnabled;
         self.articlePDFDownloadLinkText = $window.browzine.articlePDFDownloadLinkText;
+        console.log("getting the browzine stuff");
         self.coverImageUrl = self.getCoverImageUrl();
         self.defaultCoverImage = self.isDefaultCoverImage(self.coverImageUrl);
         console.log(self.coverImageUrl)
@@ -246,13 +247,13 @@ angular.module('browzineMod', [])
       return browzineEnabled;
     }
 
-    self.isDefaultCoverImage = function(coverImageUrl) {
+    self.isDefaultCoverImage = function() {
       var defaultCoverImage = false;
 
-      if (coverImageUrl && coverImageUrl.toLowerCase().indexOf("default") > -1) {
-        defaultCoverImage = true;
+      if (self.coverImageUrl && self.coverImageUrl.toLowerCase().indexOf("default") > -1) {
+        self.defaultCoverImage = true;
       }
-
+      self.defaultCoverImage = defaultCoverImage;
       return defaultCoverImage;
     }
 
