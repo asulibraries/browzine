@@ -45,6 +45,26 @@ angular.module('browzineMod', [])
         self.directToPDFUrl = self.getDirectToPDFUrl();
         self.articlePDFDownloadLinkEnabled = $window.browzine.articlePDFDownloadLinkEnabled;
         self.articlePDFDownloadLinkText = $window.browzine.articlePDFDownloadLinkText;
+        self.coverImageUrl = self.getCoverImageUrl(scope, self.data, self.journal);
+        self.defaultCoverImage = self.isDefaultCoverImage(self.coverImageUrl);
+
+        if (coverImageUrl && !defaultCoverImage && showJournalCoverImages()) {
+          (function poll() {
+            var elementParent = getElementParent(element);
+            var coverImages = elementParent.querySelectorAll("prm-search-result-thumbnail-container img");
+
+            if (coverImages[0]) {
+              if (coverImages[0].className.indexOf("fan-img") > -1) {
+                Array.prototype.forEach.call(coverImages, function (coverImage) {
+                  coverImage.src = coverImageUrl;
+                });
+              } else {
+                requestAnimationFrame(poll);
+              }
+            }
+          })();
+        }
+
       }, function (error) {
         console.log(error);
       });
@@ -186,6 +206,24 @@ angular.module('browzineMod', [])
         browzineWebLink = data.browzineWebLink;
       }
       return browzineWebLink;
+    }
+
+    self.getCoverImageUrl = function(data){
+      var coverImageUrl = null;
+
+      if (self.isJournalTF) {
+        if (self.data && self.data.coverImageUrl) {
+          self.coverImageUrl = self.data.coverImageUrl;
+        }
+      }
+
+      if (self.isArticleTF) {
+        if (self.journal && self.journal.coverImageUrl) {
+          self.coverImageUrl = self.journal.coverImageUrl;
+        }
+      }
+      self.coverImageUrl = coverImageUrl;
+      return coverImageUrl;
     }
 
     self.getBrowzineEnabled = function(){
