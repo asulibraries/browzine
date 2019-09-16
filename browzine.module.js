@@ -54,7 +54,7 @@ angular.module('browzineMod', [])
         if (self.coverImageUrl && !self.defaultCoverImage) {
           (function poll() {
             console.log("in the poll")
-            var elementParent = self.$element.parent();
+            var elementParent = this.$element.parent();
             var coverImages = elementParent.querySelectorAll("prm-search-result-thumbnail-container img");
 
             if (coverImages[0]) {
