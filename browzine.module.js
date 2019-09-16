@@ -214,18 +214,24 @@ angular.module('browzineMod', [])
 
     self.getCoverImageUrl = function(){
       var coverImageUrl = null;
+      var data = self.data;
+      var journal = self.journal;
 
-      if (self.isJournalTF) {
-        if (self.data && self.data.coverImageUrl) {
-          self.coverImageUrl = self.data.coverImageUrl;
+      if (isJournalTF) {
+        if (data && data.coverImageUrl) {
+          console.log("its the journal's cover image")
+          coverImageUrl = self.data.coverImageUrl;
         }
       }
 
-      if (self.isArticleTF) {
-        if (self.journal && self.journal.coverImageUrl) {
-          self.coverImageUrl = self.journal.coverImageUrl;
+      if (isArticleTF) {
+        console.log("its an article")
+        if (journal && journal.coverImageUrl) {
+          console.log("its the journals cover image from the article level")
+          coverImageUrl = journal.coverImageUrl;
         }
       }
+      console.log(coverImageUrl);
       self.coverImageUrl = coverImageUrl;
       return coverImageUrl;
     }
