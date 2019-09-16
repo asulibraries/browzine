@@ -37,9 +37,11 @@ angular.module('browzineMod', [])
       $http.get(self.endpoint).then(function (response) {
         self.response = response;
         self.data = self.getData(response);
+        console.log(self.data);
         if (!self.journal) {
           self.journal = self.getIncludedJournal();
         }
+        console.log(self.journal);
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
