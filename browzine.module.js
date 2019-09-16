@@ -6,6 +6,9 @@ angular.module('browzineMod', [])
   }])
   .controller('browzineController', ['$scope', '$http', '$window', '$element', function ($scope, $http, $window, $element) {
     var self = this;
+    console.log(this.$element);
+    console.log(self.$element);
+    console.log($element);
 
     self.$onInit = function () {
       self.browzineEnabled = true;
