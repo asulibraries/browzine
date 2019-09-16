@@ -57,6 +57,7 @@ angular.module('browzineMod', [])
             console.log($element)
             var elementParent = $element.parent().parent();
             console.log(elementParent);
+            console.log($element.offsetParent);
             var coverImages = elementParent[0].querySelectorAll("prm-search-result-thumbnail-container img");
 
             if (coverImages[0]) {
