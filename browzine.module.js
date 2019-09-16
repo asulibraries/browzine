@@ -45,11 +45,12 @@ angular.module('browzineMod', [])
         self.directToPDFUrl = self.getDirectToPDFUrl();
         self.articlePDFDownloadLinkEnabled = $window.browzine.articlePDFDownloadLinkEnabled;
         self.articlePDFDownloadLinkText = $window.browzine.articlePDFDownloadLinkText;
-        self.coverImageUrl = self.getCoverImageUrl(scope, self.data, self.journal);
+        self.coverImageUrl = self.getCoverImageUrl();
         self.defaultCoverImage = self.isDefaultCoverImage(self.coverImageUrl);
-
-        if (coverImageUrl && !defaultCoverImage && showJournalCoverImages()) {
+        console.log(self.coverImageUrl)
+        if (self.coverImageUrl && !self.defaultCoverImage) {
           (function poll() {
+            console.log("in the poll")
             var elementParent = getElementParent(element);
             var coverImages = elementParent.querySelectorAll("prm-search-result-thumbnail-container img");
 
@@ -208,7 +209,7 @@ angular.module('browzineMod', [])
       return browzineWebLink;
     }
 
-    self.getCoverImageUrl = function(data){
+    self.getCoverImageUrl = function(){
       var coverImageUrl = null;
 
       if (self.isJournalTF) {
