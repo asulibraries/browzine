@@ -55,8 +55,8 @@ angular.module('browzineMod', [])
           (function poll() {
             console.log("in the poll")
             console.log($element)
-            var elementParent = $element.parent();
-            console.log($element.parent())
+            var elementParent = $element.parent().parent();
+            console.log(elementParent);
             var coverImages = elementParent[0].querySelectorAll("prm-search-result-thumbnail-container img");
 
             if (coverImages[0]) {
