@@ -217,14 +217,14 @@ angular.module('browzineMod', [])
       var data = self.data;
       var journal = self.journal;
 
-      if (isJournalTF) {
+      if (self.isJournalTF) {
         if (data && data.coverImageUrl) {
           console.log("its the journal's cover image")
           coverImageUrl = self.data.coverImageUrl;
         }
       }
 
-      if (isArticleTF) {
+      if (self.isArticleTF) {
         console.log("its an article")
         if (journal && journal.coverImageUrl) {
           console.log("its the journals cover image from the article level")
