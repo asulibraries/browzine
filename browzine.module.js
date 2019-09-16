@@ -4,7 +4,7 @@ angular.module('browzineMod', [])
     urlWhitelist.push('https://public-api.thirdiron.com/public/v1/' + '**');
     $sceDelegateProvider.resourceUrlWhitelist(urlWhitelist);
   }])
-  .controller('browzineController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+  .controller('browzineController', ['$scope', '$http', '$window', '$element', function ($scope, $http, $window, $element) {
     var self = this;
 
     self.$onInit = function () {
@@ -54,7 +54,7 @@ angular.module('browzineMod', [])
         if (self.coverImageUrl && !self.defaultCoverImage) {
           (function poll() {
             console.log("in the poll")
-            var elementParent = getElementParent(element);
+            var elementParent = self.$element.parent();
             var coverImages = elementParent.querySelectorAll("prm-search-result-thumbnail-container img");
 
             if (coverImages[0]) {
