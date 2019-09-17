@@ -8,6 +8,7 @@ angular.module('browzineMod', [])
     var self = this;
 
     self.$onInit = function () {
+      self.availLine = this.prmSearchResultAvailabilityLine.$element;
       self.browzineEnabled = true;
       self.browzineWebLinkText = "";
       self.data = null;
@@ -20,50 +21,41 @@ angular.module('browzineMod', [])
       self.doi = "";
       self.issn = "";
       self.directToPDFUrl = "";
-      if(self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())){
-        if (self.isArticleTF){
+      if (self.browzineEnabled && self.result && (self.isArticle() || self.isJournal())) {
+        if (self.isArticleTF) {
           self.browzineWebLinkText = $window.browzine.articleBrowZineWebLinkText;
-        } else if (self.isJournalTF){
+        } else if (self.isJournalTF) {
           self.browzineWebLinkText = $window.browzine.journalBrowZineWebLinkText;
         }
         self.endpoint = self.getEndpoint();
-        if (self.endpoint){
+        if (self.endpoint) {
           self.getFromEndpoint(self.endpoint);
         }
       }
     }
 
-    self.getFromEndpoint = function(){
+    self.getFromEndpoint = function () {
       $http.get(self.endpoint).then(function (response) {
         self.response = response;
         self.data = self.getData(response);
-        console.log(self.data);
         if (!self.journal) {
           self.journal = self.getIncludedJournal();
         }
-        console.log(self.journal);
         self.browzineEnabled = self.getBrowzineEnabled();
         self.browzineWebLink = self.getBrowzineWebLink();
         self.directToPDFUrl = self.getDirectToPDFUrl();
         self.articlePDFDownloadLinkEnabled = $window.browzine.articlePDFDownloadLinkEnabled;
         self.articlePDFDownloadLinkText = $window.browzine.articlePDFDownloadLinkText;
-        console.log("getting the browzine stuff");
         self.coverImageUrl = self.getCoverImageUrl();
         self.defaultCoverImage = self.isDefaultCoverImage(self.coverImageUrl);
-        console.log(self.coverImageUrl)
         if (self.coverImageUrl && !self.defaultCoverImage) {
           (function poll() {
-            console.log("in the poll")
-            console.log($element)
-            var elementParent = $element.parent().parent();
-            console.log(elementParent);
-            console.log($element.offsetParent);
+            var elementParent = self.availLine.parent().parent().parent();
             var coverImages = elementParent[0].querySelectorAll("prm-search-result-thumbnail-container img");
-
             if (coverImages[0]) {
               if (coverImages[0].className.indexOf("fan-img") > -1) {
                 Array.prototype.forEach.call(coverImages, function (coverImage) {
-                  coverImage.src = coverImageUrl;
+                  coverImage.src = self.coverImageUrl;
                 });
               } else {
                 requestAnimationFrame(poll);
@@ -77,7 +69,7 @@ angular.module('browzineMod', [])
       });
     }
 
-    self.isArticle = function() {
+    self.isArticle = function () {
       var validation = false;
       var result = self.result;
 
@@ -94,7 +86,7 @@ angular.module('browzineMod', [])
       return validation;
     };
 
-    self.isJournal = function(){
+    self.isJournal = function () {
       var validation = false;
       var result = self.result;
 
@@ -111,11 +103,11 @@ angular.module('browzineMod', [])
       return validation;
     }
 
-    self.getResult = function() {
+    self.getResult = function () {
       return self.prmSearchResultAvailabilityLine.result || self.prmSearchResultAvailabilityLine.item;
     };
 
-    self.getIssn = function(){
+    self.getIssn = function () {
       var issn = "";
       var result = self.result;
 
@@ -144,7 +136,7 @@ angular.module('browzineMod', [])
       return encodeURIComponent(issn);
     }
 
-    self.getDoi = function(){
+    self.getDoi = function () {
       var doi = "";
       var result = self.result;
 
@@ -159,31 +151,31 @@ angular.module('browzineMod', [])
       return encodeURIComponent(doi);;
     }
 
-    self.getEndpoint = function(){
+    self.getEndpoint = function () {
       var endpoint = "";
 
       if (self.isArticleTF) {
-        if(!self.doi){self.getDoi()}
-        if(self.doi){
+        if (!self.doi) { self.getDoi() }
+        if (self.doi) {
           endpoint = $window.browzine.api + "/articles/doi/" + self.doi + "?include=journal";
         }
       }
 
       if (self.isJournalTF) {
-        if(!self.issn){self.getIssn()}
-        if(self.issn){
+        if (!self.issn) { self.getIssn() }
+        if (self.issn) {
           endpoint = $window.browzine.api + "/search?issns=" + self.issn;
         }
       }
 
-      if (endpoint){
+      if (endpoint) {
         endpoint += "&access_token=" + $window.browzine.apiKey;
       }
 
       return endpoint;
     }
 
-    self.getData = function(){
+    self.getData = function () {
       var data = {};
       var response = self.response;
       if (Array.isArray(response.data.data)) {
@@ -197,7 +189,7 @@ angular.module('browzineMod', [])
       return data;
     }
 
-    self.getIncludedJournal = function(){
+    self.getIncludedJournal = function () {
       var response = self.response.data;
       var journal = null;
       if (response.included) {
@@ -206,7 +198,7 @@ angular.module('browzineMod', [])
       return journal;
     }
 
-    self.getBrowzineWebLink = function(){
+    self.getBrowzineWebLink = function () {
       var data = self.data;
       var browzineWebLink = null;
       if (data && data.browzineWebLink) {
@@ -215,31 +207,27 @@ angular.module('browzineMod', [])
       return browzineWebLink;
     }
 
-    self.getCoverImageUrl = function(){
+    self.getCoverImageUrl = function () {
       var coverImageUrl = null;
       var data = self.data;
       var journal = self.journal;
 
       if (self.isJournalTF) {
         if (data && data.coverImageUrl) {
-          console.log("its the journal's cover image")
           coverImageUrl = self.data.coverImageUrl;
         }
       }
 
       if (self.isArticleTF) {
-        console.log("its an article")
         if (journal && journal.coverImageUrl) {
-          console.log("its the journals cover image from the article level")
           coverImageUrl = journal.coverImageUrl;
         }
       }
-      console.log(coverImageUrl);
       self.coverImageUrl = coverImageUrl;
       return coverImageUrl;
     }
 
-    self.getBrowzineEnabled = function(){
+    self.getBrowzineEnabled = function () {
       var browzineEnabled = false;
       var data = self.data;
       var journal = self.journal;
@@ -258,7 +246,7 @@ angular.module('browzineMod', [])
       return browzineEnabled;
     }
 
-    self.isDefaultCoverImage = function() {
+    self.isDefaultCoverImage = function () {
       var defaultCoverImage = false;
 
       if (self.coverImageUrl && self.coverImageUrl.toLowerCase().indexOf("default") > -1) {
@@ -268,7 +256,7 @@ angular.module('browzineMod', [])
       return defaultCoverImage;
     }
 
-    self.getDirectToPDFUrl = function(){
+    self.getDirectToPDFUrl = function () {
       var directToPDFUrl = null;
       var data = self.data;
       if (self.isArticleTF && data) {
@@ -279,7 +267,7 @@ angular.module('browzineMod', [])
       return directToPDFUrl;
     }
 
-    self.isFiltered = function() {
+    self.isFiltered = function () {
       var validation = false;
       var result = self.result;
 
